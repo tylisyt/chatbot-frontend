@@ -8,19 +8,22 @@ app.use(express.json());
 
 let content = "";
 
+// Ruta para analizar una URL simulada
 app.post("/analyze", async (req, res) => {
   const { url } = req.body;
-  // Simulación simple, aquí iría scraping o carga real
   content = `Contenido simulado de ${url}`;
   res.json({ status: `Contenido de ${url} cargado con éxito.` });
 });
 
+// Ruta para responder preguntas
 app.post("/ask", async (req, res) => {
   const { question } = req.body;
-  // Simulación respuesta basada en "content"
   const answer = `Simulando respuesta a: "${question}" basada en "${content}"`;
   res.json({ answer });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
+// Puerto dinámico compatible con Railway
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
+});
