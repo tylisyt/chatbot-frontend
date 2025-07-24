@@ -41,7 +41,7 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     }
 
-    input, textarea, select {
+    input, select {
       width: 100%;
       padding: 0.75rem;
       margin-top: 0.5rem;
@@ -97,17 +97,66 @@
     <button onclick="analyzeWebsite()">Analizar web</button>
     <div id="status"></div>
 
-    <label for="presetQuestions" style="margin-top: 1.5rem;">Selecciona una pregunta común:</label>
-    <select id="presetQuestions" onchange="selectPresetQuestion()">
+    <label for="presetQuestions" style="margin-top: 1.5rem;">Selecciona una pregunta:</label>
+    <select id="presetQuestions">
       <option value="">-- Elige una pregunta --</option>
       <option value="¿Cuál es la política de privacidad?">¿Cuál es la política de privacidad?</option>
       <option value="¿Cuáles son los términos y condiciones?">¿Cuáles son los términos y condiciones?</option>
       <option value="¿Cuál es la política de envío?">¿Cuál es la política de envío?</option>
       <option value="¿Cómo puedo contactar con soporte?">¿Cómo puedo contactar con soporte?</option>
     </select>
+    <button onclick="askSelectedQuestion()">Preguntar</button>
 
-    <label for="questionInput" style="margin-top: 1rem;">Haz tu pregunta:</label>
-    <textarea id="questionInput" placeholder="¿Cuál es la política de envío de esta web?" rows="3"></textarea>
-    <button
+    <div id="chat"></div>
+  </div>
+
+  <script>
+    async function analyzeWebsite() {
+      const url = document.getElementById('urlInput').value;
+      const status = document.getElementById('status');
+      status.innerText = 'Analizando...';
+
+      try {
+        const res = await fetch('https://chatbot-frontend-production-fdc5.up.railway.app/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+
+        const data = await res.json();
+        status.innerText = data.status || 'Análisis completado';
+      } catch (error) {
+        status.innerText = `Error: ${error.message}`;
+      }
+    }
+
+    async function askSelectedQuestion() {
+      const select = document.getElementById('presetQuestions');
+      const question = select.value;
+      if (!question) return alert('Por favor, selecciona una pregunta.');
+
+      const chat = document.getElementById('chat');
+      chat.innerText += `Tú: ${question}\n`;
+
+      try {
+        const res = await fetch('https://chatbot-frontend-production-fdc5.up.railway.app/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+
+        const data = await res.json();
+        chat.innerText += `Bot: ${data.answer || 'No hay respuesta'}\n\n`;
+      } catch (error) {
+        chat.innerText += `Error: ${error.message}\n\n`;
+      }
+    }
+  </script>
+</body>
+</html>
 
 
