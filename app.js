@@ -5,14 +5,20 @@ async function analyzeWebsite() {
   const status = document.getElementById('status');
   status.innerText = 'Analizando...';
 
-  const res = await fetch(`${API_BASE}/analyze`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url })
-  });
+  try {
+    const res = await fetch(`${API_BASE}/analyze`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
 
-  const data = await res.json();
-  status.innerText = data.status || 'Análisis completado';
+    if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+
+    const data = await res.json();
+    status.innerText = data.status || 'Análisis completado';
+  } catch (error) {
+    status.innerText = `Error: ${error.message}`;
+  }
 }
 
 async function askQuestion() {
@@ -20,12 +26,18 @@ async function askQuestion() {
   const chat = document.getElementById('chat');
   chat.innerText += `Tú: ${question}\n`;
 
-  const res = await fetch(`${API_BASE}/ask`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question })
-  });
+  try {
+    const res = await fetch(`${API_BASE}/ask`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
 
-  const data = await res.json();
-  chat.innerText += `Bot: ${data.answer}\n\n`;
+    if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
+
+    const data = await res.json();
+    chat.innerText += `Bot: ${data.answer || 'No hay respuesta'}\n\n`;
+  } catch (error) {
+    chat.innerText += `Error: ${error.message}\n\n`;
+  }
 }
