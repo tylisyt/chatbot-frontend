@@ -31,7 +31,18 @@ app.post("/analyze", async (req, res) => {
 
 app.post("/ask", async (req, res) => {
   const { question } = req.body;
-  const answer = `Simulando respuesta a: "${question}" basada en "${content}"`;
+  let answer = '';
+
+  const questionLower = question.toLowerCase().trim();
+
+  if (questionLower.includes("política de privacidad") || questionLower.includes("privacidad")) {
+    answer = "Nuestra política de privacidad garantiza la protección de tus datos personales y el uso responsable de la información que recopilamos.";
+  } else if (questionLower.includes("términos y condiciones") || questionLower.includes("condiciones")) {
+    answer = "Los términos y condiciones regulan el uso de nuestro servicio y establecen las responsabilidades tanto para los usuarios como para la empresa.";
+  } else {
+    answer = `Simulando respuesta a: "${question}" basada en "${content}"`;
+  }
+
   res.json({ answer });
 });
 
