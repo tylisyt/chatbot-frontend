@@ -1,4 +1,3 @@
-
 const API_BASE = 'https://chatbot-backend-production.up.railway.app';
 
 async function analyzeWebsite() {
@@ -6,7 +5,7 @@ async function analyzeWebsite() {
   const status = document.getElementById('status');
   status.innerText = 'Analizando...';
 
-  const res = await fetch(`${API_BASE}/api/analyze`, {
+  const res = await fetch(`${API_BASE}/analyze`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ url })
@@ -21,7 +20,7 @@ async function askQuestion() {
   const chat = document.getElementById('chat');
   chat.innerText += `Tú: ${question}\n`;
 
-  const res = await fetch(`${API_BASE}/api/ask`, {
+  const res = await fetch(`${API_BASE}/ask`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question })
