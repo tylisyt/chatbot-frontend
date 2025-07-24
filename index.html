@@ -41,7 +41,7 @@
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 0.75rem;
       margin-top: 0.5rem;
@@ -97,12 +97,17 @@
     <button onclick="analyzeWebsite()">Analizar web</button>
     <div id="status"></div>
 
-    <label for="questionInput" style="margin-top: 1.5rem;">Haz tu pregunta:</label>
-    <textarea id="questionInput" placeholder="¿Cuál es la política de envío de esta web?" rows="3"></textarea>
-    <button onclick="askQuestion()">Preguntar</button>
+    <label for="presetQuestions" style="margin-top: 1.5rem;">Selecciona una pregunta común:</label>
+    <select id="presetQuestions" onchange="selectPresetQuestion()">
+      <option value="">-- Elige una pregunta --</option>
+      <option value="¿Cuál es la política de privacidad?">¿Cuál es la política de privacidad?</option>
+      <option value="¿Cuáles son los términos y condiciones?">¿Cuáles son los términos y condiciones?</option>
+      <option value="¿Cuál es la política de envío?">¿Cuál es la política de envío?</option>
+      <option value="¿Cómo puedo contactar con soporte?">¿Cómo puedo contactar con soporte?</option>
+    </select>
 
-    <div id="chat"></div>
-  </div>
-</body>
-</html>
+    <label for="questionInput" style="margin-top: 1rem;">Haz tu pregunta:</label>
+    <textarea id="questionInput" placeholder="¿Cuál es la política de envío de esta web?" rows="3"></textarea>
+    <button
+
 
