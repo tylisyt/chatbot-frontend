@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Q&A Chatbot</title>
+  <script defer src="app.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; }
+    input, textarea { width: 100%; margin-top: 0.5rem; padding: 0.5rem; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; }
+    #chat { border: 1px solid #ccc; padding: 1rem; margin-top: 1rem; min-height: 200px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>🤖 Website Chatbot</h1>
+  <input type="text" id="urlInput" placeholder="Introduce la URL a analizar"/>
+  <button onclick="analyzeWebsite()">Analizar web</button>
+  <div id="status"></div>
+
+  <textarea id="questionInput" placeholder="Haz una pregunta sobre la web..." rows="3"></textarea>
+  <button onclick="askQuestion()">Preguntar</button>
+  <div id="chat"></div>
+</body>
+</html>
