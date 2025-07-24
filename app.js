@@ -1,4 +1,4 @@
-const API_BASE = 'https://chatbot-frontend-production-42ef.up.railway.app';
+const API_BASE = 'https://chatbot-frontend-production-fdc5.up.railway.app';
 
 async function analyzeWebsite() {
   const url = document.getElementById('urlInput').value;
