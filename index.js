@@ -4,7 +4,18 @@ require("dotenv").config();
 
 const app = express();
 app.use(cors());
+
+// Middleware para parsear JSON con manejo de error
 app.use(express.json());
+
+// Middleware para capturar errores de JSON mal formado
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    console.error('Bad JSON:', err.message);
+    return res.status(400).json({ error: 'Bad JSON format' });
+  }
+  next();
+});
 
 let content = "";
 
